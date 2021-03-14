@@ -2,6 +2,8 @@ package com.cabinvoiceggenerator;
 
 import org.junit.jupiter.api.*;
 
+import java.io.*;
+
 public class InvoiceGeneratorTest {
     InvoiceGenerator invoiceGenerator = new InvoiceGenerator();
 
@@ -21,16 +23,24 @@ public class InvoiceGeneratorTest {
 
     @Test
     void givenMultipleRidesShouldReturnTotalCost() {
-        Ride[] rides = {new Ride(2, 5), new Ride(5, 6)};
+        Ride[] rides = {new Ride(2, 5, 156), new Ride(5, 6, 156)};
         Assertions.assertEquals(81, invoiceGenerator.calculateFareForAllRides(rides), 0.0);
     }
 
     @Test
-    void givenMultipleRidesWeShouldGetAnEnhancedInvoice() {
-        Ride[] rides = {new Ride(2, 5), new Ride(5, 6)};
+    void givenMultipleRidesWeShouldGetAnEnhancedInvoice() throws IOException {
+        Ride[] rides = {new Ride(2, 5, 156), new Ride(5, 6, 156)};
         double[] result = invoiceGenerator.enhancedInvoice(rides);
         Assertions.assertEquals(2, result[0]);
         Assertions.assertEquals(40.5, result[1]);
         Assertions.assertEquals(81.0, result[2]);
+    }
+
+    @Test
+    void givenUserIdShoudldGetListOfRidesAndShouldReturnInvoice() throws IOException {
+        Ride[] rides = {new Ride(2, 5, 154), new Ride(5, 6, 154)};
+        invoiceGenerator.writeToUserFile(rides);
+        int numberOfRides = invoiceGenerator.getListOfRides(156);
+        Assertions.assertEquals(34, numberOfRides);
     }
 }
