@@ -9,38 +9,40 @@ public class InvoiceGeneratorTest {
 
     @Test
     void givenDistanceAndTimeShouldReturnTotalFare() {
-        double distance = 2.0;
-        int time = 5;
-        Assertions.assertEquals(25, invoiceGenerator.calculateFare(distance, time), 0.0);
+        double distance = 10;
+        int time = 20;
+        Assertions.assertEquals(190, invoiceGenerator.calculateFare(distance, time, RideType.PREMIUM), 0.0);
     }
 
     @Test
     void givenDistanceAndTimeShouldReturnMinimumFareTotalFare() {
         double distance = 0.1;
         int time = 2;
-        Assertions.assertEquals(5, invoiceGenerator.calculateFare(distance, time), 0.0);
+        Assertions.assertEquals(20, invoiceGenerator.calculateFare(distance, time, RideType.PREMIUM), 0.0);
     }
 
     @Test
     void givenMultipleRidesShouldReturnTotalCost() {
-        Ride[] rides = {new Ride(2, 5, 156), new Ride(5, 6, 156)};
-        Assertions.assertEquals(81, invoiceGenerator.calculateFareForAllRides(rides), 0.0);
+        Ride[] rides = {new Ride(10, 5, 156, RideType.PREMIUM), new Ride(10, 5, 156, RideType.REGULAR)};
+        Assertions.assertEquals(265.0, invoiceGenerator.calculateFareForAllRides(rides), 0.0);
     }
 
     @Test
     void givenMultipleRidesWeShouldGetAnEnhancedInvoice() throws IOException {
-        Ride[] rides = {new Ride(2, 5, 156), new Ride(5, 6, 156)};
+        Ride[] rides = {new Ride(2, 5, 156, RideType.PREMIUM), new Ride(5, 6, 156, RideType.REGULAR)};
         double[] result = invoiceGenerator.enhancedInvoice(rides);
         Assertions.assertEquals(2, result[0]);
-        Assertions.assertEquals(40.5, result[1]);
-        Assertions.assertEquals(81.0, result[2]);
+        Assertions.assertEquals(48.0, result[1]);
+        Assertions.assertEquals(96.0, result[2]);
     }
 
     @Test
     void givenUserIdShoudldGetListOfRidesAndShouldReturnInvoice() throws IOException {
-        Ride[] rides = {new Ride(2, 5, 154), new Ride(5, 6, 154)};
+        Ride[] rides = {new Ride(2, 5, 161, RideType.REGULAR), new Ride(5, 6, 161, RideType.PREMIUM)};
         invoiceGenerator.writeToUserFile(rides);
-        int numberOfRides = invoiceGenerator.getListOfRides(156);
-        Assertions.assertEquals(34, numberOfRides);
+        int numberOfRides = invoiceGenerator.getListOfRides(160);
+        Assertions.assertEquals(4, numberOfRides);
     }
+
+
 }
