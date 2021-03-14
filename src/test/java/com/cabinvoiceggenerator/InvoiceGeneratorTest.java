@@ -24,4 +24,13 @@ public class InvoiceGeneratorTest {
         Ride[] rides = {new Ride(2, 5), new Ride(5, 6)};
         Assertions.assertEquals(81, invoiceGenerator.calculateFareForAllRides(rides), 0.0);
     }
+
+    @Test
+    void givenMultipleRidesWeShouldGetAnEnhancedInvoice() {
+        Ride[] rides = {new Ride(2, 5), new Ride(5, 6)};
+        double[] result = invoiceGenerator.enhancedInvoice(rides);
+        Assertions.assertEquals(2, result[0]);
+        Assertions.assertEquals(40.5, result[1]);
+        Assertions.assertEquals(81.0, result[2]);
+    }
 }
