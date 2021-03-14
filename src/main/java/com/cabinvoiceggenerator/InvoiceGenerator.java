@@ -19,4 +19,15 @@ public class InvoiceGenerator {
         }
         return totalFare;
     }
+
+    public double[] enhancedInvoice(Ride[] rides) {
+        double totalFare = this.calculateFareForAllRides(rides);
+        int numberOfRides = rides.length;
+        double averageFarePerRide = totalFare / numberOfRides;
+        System.out.println("Number of Rides :" + numberOfRides);
+        System.out.println("Average fare per ride :" + averageFarePerRide);
+        System.out.println("Total Fare :" + totalFare);
+        double[] result = {numberOfRides, averageFarePerRide, totalFare};
+        return result;
+    }
 }
