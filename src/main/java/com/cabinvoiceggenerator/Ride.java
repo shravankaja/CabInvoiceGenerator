@@ -1,6 +1,11 @@
 package com.cabinvoiceggenerator;
 
+enum RideType {
+    REGULAR, PREMIUM;
+}
+
 public class Ride {
+    RideType type;
     double distance;
     int time;
     int userId;
@@ -9,10 +14,11 @@ public class Ride {
         return userId;
     }
 
-    public Ride(double distance, int time, int userId) {
+    public Ride(double distance, int time, int userId, RideType type) {
         this.distance = distance;
         this.time = time;
-        this.userId=userId;
+        this.userId = userId;
+        this.type = type;
     }
 
     @Override
